@@ -1,0 +1,52 @@
+package env
+
+import (
+	"fmt"
+	"github.com/spf13/viper"
+	"reflect"
+)
+
+type Config struct {
+	DBHost  string `mapstructure:"DB_HOST" default:"127.0.0.1"`
+	DBPort  int    `mapstructure:"DB_PORT" default:"3306"`
+	DBName  string `mapstructure:"DB_Name" default:"skincare"`
+	DBUser  string `mapstructure:"DB_User" default:"shabry"`
+	DBPass  string `mapstructure:"DB_Pass" default:"U6qM2j5fZJS6"`
+	AppHost string `mapstructure:"APP_HOST" default:"localhost"`
+	AppPort int    `mapstructure:"APP_PORT" default:"5000"`
+}
+
+func (c *Config) ConnectionString() string {
+	return fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		c.DBUser, c.DBPass, c.DBHost, c.DBPort, c.DBName)
+}
+
+var (
+	cfg *Config = nil
+)
+
+func Get() *Config {
+	if cfg == nil {
+		cfg = new(Config)
+
+		viper.SetConfigType("yaml")
+		viper.SetConfigFile("env.yaml")
+		viper.AddConfigPath(".")
+		viper.AutomaticEnv()
+
+		_ = viper.ReadInConfig()
+
+		e := reflect.ValueOf(cfg).Elem()
+		t := e.Type()
+		for i := 0; i < e.NumField(); i++ {
+			key := t.Field(i).Tag.Get("mapstructure")
+			value := t.Field(i).Tag.Get("default")
+
+			viper.SetDefault(key, value)
+		}
+
+		_ = viper.Unmarshal(cfg)
+	}
+
+	return cfg
+}
