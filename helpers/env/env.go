@@ -9,9 +9,9 @@ import (
 type Config struct {
 	DBHost  string `mapstructure:"DB_HOST" default:"127.0.0.1"`
 	DBPort  int    `mapstructure:"DB_PORT" default:"3306"`
-	DBName  string `mapstructure:"DB_Name" default:"skincare"`
-	DBUser  string `mapstructure:"DB_User" default:"shabry"`
-	DBPass  string `mapstructure:"DB_Pass" default:"U6qM2j5fZJS6"`
+	DBName  string `mapstructure:"DB_NAME" default:""`
+	DBUser  string `mapstructure:"DB_USER" default:"root"`
+	DBPass  string `mapstructure:"DB_PASS" default:""`
 	AppHost string `mapstructure:"APP_HOST" default:"localhost"`
 	AppPort int    `mapstructure:"APP_PORT" default:"5000"`
 }

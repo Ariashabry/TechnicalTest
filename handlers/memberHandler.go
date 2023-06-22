@@ -21,7 +21,7 @@ func (c *Context) GetAllMember(ctx echo.Context) error {
 			Code:    http.StatusInternalServerError,
 			Message: "Failed getting data",
 		}
-		log.Fatal("Error getting data members:", err.Error)
+		log.Println("Error getting data members:", err.Error)
 		return ctx.JSON(http.StatusInternalServerError, Results)
 	}
 
@@ -50,11 +50,11 @@ func (c *Context) InsertMember(ctx echo.Context) error {
 	if err != nil {
 		Results := &Result{
 			Success: false,
-			Data:    err.Error(),
+			Data:    nil,
 			Code:    http.StatusBadRequest,
 			Message: "Failed send data",
 		}
-		log.Fatal("Error creating member:", err.Error)
+		log.Println("Error creating member:", err.Error)
 		return ctx.JSON(http.StatusBadRequest, Results)
 	}
 
@@ -64,11 +64,11 @@ func (c *Context) InsertMember(ctx echo.Context) error {
 	if err != nil {
 		Results := &Result{
 			Success: false,
-			Data:    err.Error(),
+			Data:    nil,
 			Code:    http.StatusInternalServerError,
 			Message: "Failed Adding data",
 		}
-		log.Fatal("Failed Adding data", err.Error())
+		log.Println("Failed Adding data", err.Error())
 		return ctx.JSON(http.StatusInternalServerError, Results)
 	}
 
@@ -88,11 +88,11 @@ func (c *Context) UpdateMember(ctx echo.Context) error {
 	if err != nil {
 		Results := &Result{
 			Success: false,
-			Data:    err.Error(),
+			Data:    nil,
 			Code:    http.StatusBadRequest,
 			Message: "Failed send data",
 		}
-		log.Fatal("Error creating member:", err.Error)
+		log.Println("Error creating member:", err.Error)
 		return ctx.JSON(http.StatusBadRequest, Results)
 	}
 
@@ -106,7 +106,7 @@ func (c *Context) UpdateMember(ctx echo.Context) error {
 			log.Println("User Not Found")
 			return ctx.JSON(http.StatusNotFound, nil)
 		} else {
-			log.Fatal("Error", err.Error())
+			log.Println("Error", err.Error())
 			return ctx.JSON(http.StatusInternalServerError, nil)
 		}
 	}
@@ -124,11 +124,11 @@ func (c *Context) UpdateMember(ctx echo.Context) error {
 	if err != nil {
 		Results := &Result{
 			Success: false,
-			Data:    err.Error(),
+			Data:    nil,
 			Code:    http.StatusInternalServerError,
 			Message: "Failed Updating Data",
 		}
-		log.Fatal("Failed updating data", err.Error())
+		log.Println("Failed updating data", err.Error())
 		return ctx.JSON(http.StatusInternalServerError, Results)
 	}
 	Results := &Result{
@@ -154,7 +154,7 @@ func (c *Context) DeleteMember(ctx echo.Context) error {
 			log.Println("User Not Found")
 			return ctx.JSON(http.StatusNotFound, nil)
 		} else {
-			log.Fatal("Failed deleting member", err.Error())
+			log.Println("Failed deleting member", err.Error())
 			return ctx.JSON(http.StatusInternalServerError, nil)
 		}
 	}
@@ -170,7 +170,7 @@ func (c *Context) DeleteMember(ctx echo.Context) error {
 			Code:    http.StatusInternalServerError,
 			Message: "Failed Deleting Data",
 		}
-		log.Fatal("Failed Deleting data", err.Error())
+		log.Println("Failed Deleting data", err.Error())
 		return ctx.JSON(http.StatusInternalServerError, Results)
 	}
 	Results := &Result{
